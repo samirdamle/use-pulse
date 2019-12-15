@@ -14,14 +14,38 @@ npm install --save use-pulse
 
 ```jsx
 import React, { Component } from 'react'
-
-import { useMyHook } from 'use-pulse'
+import { usePulse } from 'use-pulse'
 
 const Example = () => {
-  const example = useMyHook()
-  return (
-    <div>{example}</div>
-  )
+        const myPulse = usePulse(0, 100, 1, 500, 1000)  // (min, max, increment, delay, interval)
+        // This will create a pulse that will count from min = 0 to max = 100 (inclusive of both ends)
+        // with increment = 1 after an initial delay = 500 milliseconds and at an interval = 1000 miliseconds.
+
+        // To start the pulse
+        // myPulse.start()
+
+        // To pause or stop the pulse
+        // myPulse.stop()
+
+        // To reset the pulse value back to min and stop there
+        // myPulse.reset()
+
+        // To restart the pulse from the current value
+        // myPulse.start()
+
+        // To get the current value of the pulse
+        // myPulse.value
+
+        return (
+            <div>
+                <div>Pulse Value: {myPulse.value}</div>
+                <div>
+                    <button onClick={myPulse.reset}>Reset</button>
+                    <button onClick={myPulse.start}>Start</button>
+                    <button onClick={myPulse.stop}>Stop</button>
+                </div>
+            </div>
+        )
 }
 ```
 
