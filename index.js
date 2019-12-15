@@ -10,7 +10,7 @@ const usePulse = (min = 0, max = 9, increment = 1, interval = 1000, delay = 0) =
     useEffect(() => {
         if(state === null){
             valueRef.current = min
-            setValue(prevValue => valueRef.current)
+            setValue(valueRef.current)
         }
 
         clearInterval(timerRef.current)
@@ -18,7 +18,6 @@ const usePulse = (min = 0, max = 9, increment = 1, interval = 1000, delay = 0) =
         if(state && interval != null){
             const delayTimer = setTimeout(() => {
                 clearTimeout(delayTimer)
-                setValue(prevValue => valueRef.current)
                 timerRef.current = setInterval(pulse, interval)
             }, delay)
         } else {
@@ -31,7 +30,7 @@ const usePulse = (min = 0, max = 9, increment = 1, interval = 1000, delay = 0) =
     const pulse = () => {
         if (state && valueRef.current < max) {
             valueRef.current = (valueRef.current + increment)
-            setValue(prevValue => valueRef.current)
+            setValue(valueRef.current)
         } else {
             clearInterval(timerRef.current)
         }
@@ -44,16 +43,6 @@ const usePulse = (min = 0, max = 9, increment = 1, interval = 1000, delay = 0) =
     const start = () => {
         setState(true)
     }
-
-    /*
-    const pause = () => {
-        setState(2)
-    }
-
-    const resume = () => {
-        setState(3)
-    }
-    */
 
     const stop = () => {
         setState(false)
