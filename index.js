@@ -1,23 +1,24 @@
 import React, {useEffect, useRef, useState} from 'react'
 
-const usePulse = (min = 0, max = 10, increment = 1, interval = 1000, delay = 0) => {
+const usePulse = (min = 0, max = 9, increment = 1, interval = 1000, delay = 0) => {
     const timerRef = useRef()
     const valueRef = useRef()
 
-    const [pulsing, setPulsing] = useState(null)
+    const [state, setState] = useState(null)
     const [value, setValue] = useState(min)
 
     useEffect(() => {
-        if(pulsing === null){
+        if(state === null){
             valueRef.current = min
+            setValue(prevValue => valueRef.current)
         }
 
-        if(pulsing && interval != null){
+        clearInterval(timerRef.current)
+
+        if(state && interval != null){
             const delayTimer = setTimeout(() => {
                 clearTimeout(delayTimer)
-                // valueRef.current = min
                 setValue(prevValue => valueRef.current)
-
                 timerRef.current = setInterval(pulse, interval)
             }, delay)
         } else {
@@ -25,10 +26,10 @@ const usePulse = (min = 0, max = 10, increment = 1, interval = 1000, delay = 0) 
         }
 
         return () => clearInterval(timerRef.current)
-    }, [pulsing])
+    }, [state])
 
     const pulse = () => {
-        if (pulsing && valueRef.current < max) {
+        if (state && valueRef.current < max) {
             valueRef.current = (valueRef.current + increment)
             setValue(prevValue => valueRef.current)
         } else {
@@ -36,19 +37,29 @@ const usePulse = (min = 0, max = 10, increment = 1, interval = 1000, delay = 0) 
         }
     }
 
-    const start = () => {
-        setPulsing(true)
+    const reset = () => {
+        setState(null)
     }
 
-    const pause = () => {
-        setPulsing(false)
+    const start = () => {
+        setState(true)
     }
+
+    /*
+    const pause = () => {
+        setState(2)
+    }
+
+    const resume = () => {
+        setState(3)
+    }
+    */
 
     const stop = () => {
-        setPulsing(null)
+        setState(false)
     }
 
-    return {start, pause, stop, value}
+    return {reset, start, stop, value}
 }
 
 export {usePulse}
