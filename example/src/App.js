@@ -12,7 +12,7 @@ const App = () => {
                 <button onClick={myPulse1.start}>Start</button>
                 <button onClick={myPulse1.stop}>Stop</button>
             </div>
-            <br/><br/>
+            <br /> <br />
             <div>Pulse 2 Value: {myPulse2.value}</div>
             <div>
                 <button onClick={myPulse2.reset}>Reset</button>
