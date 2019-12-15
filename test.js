@@ -3,11 +3,16 @@ import {render} from "react-dom";
 import {usePulse} from './index'
 
 const App = () => {
-    const {pulse, startPulse, stopPulse} = usePulse()
+    console.log('App called')
+    const pulse = usePulse()
+
+    React.useEffect(() => {
+    }, [])
+
     return (<div>
         <h1>Demo of usePulse</h1>
-        <div>Pulse: {pulse}</div>
-        <div><button onClick={startPulse}>Begin Pulse</button></div>
+        <div>Pulse: {pulse.value}</div>
+        <div><button onClick={pulse.start}>Start Pulse</button> <button onClick={pulse.pause}>Pause Pulse</button> <button onClick={pulse.stop}>Stop Pulse</button> </div>
     </div>)
 };
 

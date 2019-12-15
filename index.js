@@ -1,35 +1,54 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 
-const usePulse = (min = 0, max = 9, increment = 1, interval = 500, delay = 0) => {
-    let delayTimer = null
-    let pulseTimer = null
-    let currentValue = min
-    const [pulse, setPulse] = useState(min)
+const usePulse = (min = 0, max = 10, increment = 1, interval = 1000, delay = 0) => {
+    const timerRef = useRef()
+    const valueRef = useRef()
 
-    const startPulse = () => {
-        delayTimer = setTimeout(() => {
-            pulseTimer = setInterval(() => {
+    const [pulsing, setPulsing] = useState(null)
+    const [value, setValue] = useState(min)
+
+    useEffect(() => {
+        if(pulsing === null){
+            valueRef.current = min
+        }
+
+        if(pulsing && interval != null){
+            const delayTimer = setTimeout(() => {
                 clearTimeout(delayTimer)
-                // console.log('currentValue = ', currentValue)
-                if(currentValue < max) {
-                    setPulse((prevState) => {
-                        currentValue = (prevState + increment)
-                        return currentValue
-                    })
-                } else {
-                    // console.log('stopPulse called')
-                    stopPulse()
-                }
-            }, interval)
-        }, delay)
+                // valueRef.current = min
+                setValue(prevValue => valueRef.current)
+
+                timerRef.current = setInterval(pulse, interval)
+            }, delay)
+        } else {
+            clearInterval(timerRef.current)
+        }
+
+        return () => clearInterval(timerRef.current)
+    }, [pulsing])
+
+    const pulse = () => {
+        if (pulsing && valueRef.current < max) {
+            valueRef.current = (valueRef.current + increment)
+            setValue(prevValue => valueRef.current)
+        } else {
+            clearInterval(timerRef.current)
+        }
     }
 
-    const stopPulse = () => {
-        clearTimeout(delayTimer)
-        clearInterval(pulseTimer)
+    const start = () => {
+        setPulsing(true)
     }
 
-    return {startPulse, stopPulse, pulse, delayTimer, pulseTimer}
+    const pause = () => {
+        setPulsing(false)
+    }
+
+    const stop = () => {
+        setPulsing(null)
+    }
+
+    return {start, pause, stop, value}
 }
 
-export { usePulse }
+export {usePulse}
