@@ -17,7 +17,14 @@ import React, { Component } from 'react'
 import { usePulse } from 'use-pulse'
 
 const Example = () => {
-        const myPulse = usePulse(0, 100, 1, 500, 1000)  // (min, max, increment, delay, interval)
+
+        const min = 0           // value to start at
+        const max = 100         // value to end at
+        const increment = 1     // increment added at every pulse
+        const interval = 1000   // pulse interval in milliseconds
+        const delay = 500       // delay in milliseconds before first increment
+        
+        const myPulse = usePulse(min, max, increment, interval, delay)
         // This will create a pulse that will count from min = 0 to max = 100 (inclusive of both ends)
         // with increment = 1 after an initial delay = 500 milliseconds and at an interval = 1000 miliseconds.
 
