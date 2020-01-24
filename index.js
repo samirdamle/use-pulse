@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 
 const usePulse = (min = 0, max = 9, increment = 1, interval = 1000, delay = 0) => {
     const timerRef = useRef()
@@ -8,14 +8,14 @@ const usePulse = (min = 0, max = 9, increment = 1, interval = 1000, delay = 0) =
     const [value, setValue] = useState(min)
 
     useEffect(() => {
-        if(state === null){
+        if (state === null) {
             valueRef.current = min
             setValue(valueRef.current)
         }
 
         clearInterval(timerRef.current)
 
-        if(state && interval != null){
+        if (state && interval != null) {
             const delayTimer = setTimeout(() => {
                 clearTimeout(delayTimer)
                 timerRef.current = setInterval(pulse, interval)
@@ -51,4 +51,4 @@ const usePulse = (min = 0, max = 9, increment = 1, interval = 1000, delay = 0) =
     return {reset, start, stop, value}
 }
 
-export {usePulse}
+export { usePulse }

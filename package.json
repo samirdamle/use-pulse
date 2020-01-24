@@ -1,11 +1,18 @@
 {
     "name": "use-pulse",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A React hook to spit out a sequential value at a time interval for a given number of times.",
     "author": "samirdamle",
     "license": "MIT",
     "repository": "samirdamle/use-pulse",
     "main": "dist/index.js",
+    "files": [
+        "dist/index.es.js",
+        "dist/index.js"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
     "module": "dist/index.es.js",
     "jsnext:main": "dist/index.es.js",
     "engines": {

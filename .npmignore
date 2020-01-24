@@ -1,0 +1,10 @@
+.babelrc
+.editorconfig
+.eslintrc
+.gitignore
+.travis.yml
+example
+index.html
+node_modules
+rollup.config.js
+test.js
